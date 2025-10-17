@@ -3,6 +3,9 @@ import { bytesToSize } from "../utils/formatters.js";
 import Navbar from "./Navbar.jsx";
 import { Download, ExternalLink, Link as LinkIcon } from "lucide-react";
 
+// Use environment variable for API base URL, fallback to localhost for development
+const API_BASE = import.meta.env.VITE_API_BASE_URL || import.meta.env.API_URL || 'http://localhost:5000/api';
+
 export default function DownloadPage() {
   const [files, setFiles] = useState([]);
   const [links, setLinks] = useState([]);
@@ -27,7 +30,7 @@ export default function DownloadPage() {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch("http://localhost:5000/api/files");
+      const res = await fetch(`${API_BASE}/files`);
       if (!res.ok) throw new Error('Failed to fetch files');
       const data = await res.json();
       // Filter out URL-type files (links) from the files array
@@ -49,7 +52,7 @@ export default function DownloadPage() {
       const token = localStorage.getItem('token');
       const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
 
-      const res = await fetch(`http://localhost:5000/api/links?${params}`, { headers });
+      const res = await fetch(`${API_BASE}/links?${params}`, { headers });
       if (!res.ok) throw new Error('Failed to fetch links');
       const data = await res.json();
       console.log('Links API response:', data);
@@ -63,7 +66,7 @@ export default function DownloadPage() {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/categories/public");
+      const res = await fetch(`${API_BASE}/categories/public`);
       if (!res.ok) throw new Error('Failed to fetch categories');
       const data = await res.json();
       setCategories(data);
@@ -84,7 +87,7 @@ export default function DownloadPage() {
     setDownloading(prev => new Set([...prev, itemId]));
     try {
       if (itemType === 'file') {
-        const response = await fetch(`http://localhost:5000/api/files/download/${itemId}`);
+        const response = await fetch(`${API_BASE}/files/download/${itemId}`);
 
         if (!response.ok) {
           throw new Error('Download failed');
@@ -105,7 +108,7 @@ export default function DownloadPage() {
         window.URL.revokeObjectURL(url);
       } else if (itemType === 'link') {
         // For links, increment download count and redirect to external URL
-        await fetch(`http://localhost:5000/api/links/${itemId}/download`, {
+        await fetch(`${API_BASE}/links/${itemId}/download`, {
           method: 'POST'
         });
 
@@ -145,7 +148,7 @@ export default function DownloadPage() {
       const token = localStorage.getItem('token');
       const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
 
-      await fetch(`http://localhost:5000/api/links/${linkItem._id}/download`, {
+      await fetch(`${API_BASE}/links/${linkItem._id}/download`, {
         method: 'POST',
         headers
       });

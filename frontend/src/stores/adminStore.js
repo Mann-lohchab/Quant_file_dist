@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 import Fuse from 'fuse.js';
 
 // Use environment variable for API base URL, fallback to localhost for development
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || import.meta.env.API_URL || 'http://localhost:5000/api';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
