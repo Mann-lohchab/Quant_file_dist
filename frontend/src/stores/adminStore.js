@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 import Fuse from 'fuse.js';
 
 // Use environment variable for API base URL, fallback to production URL
-const API_BASE = import.meta.env.REACT_APP_API_URL || 'https://quant-file-dist.onrender.com';
+const API_BASE = import.meta.env.REACT_APP_API_URL || 'https://quant-file-dist.onrender.com/api';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
