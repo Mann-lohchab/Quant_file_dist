@@ -1,0 +1,38 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.jsx';
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title || "File Server"}</title>
+
+    <script is:inline>
+      // Light theme only - no theme switching
+    </script>
+  </head>
+  <body class="bg-white text-black min-h-screen">
+    <Navbar pageTitle={title} />
+    <main class="pt-16">
+      <slot />
+    </main>
+
+    <!-- Toast notifications container -->
+    <div id="toast-container"></div>
+  </body>
+</html>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+</style>
