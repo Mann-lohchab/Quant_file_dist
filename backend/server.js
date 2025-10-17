@@ -174,6 +174,9 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT , () => console.log(`Server running at port ${PORT}`));
 
+// Export for Render
+export default app;
+
 // Graceful shutdown
 process.on('SIGTERM', () => {
   console.log('SIGTERM received, shutting down gracefully');

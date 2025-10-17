@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: quant-download-backend
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URL
+        sync: false # Set this in Render dashboard
+      - key: JWT_SECRET
+        sync: false # Set this in Render dashboard
+      - key: CLIENT_URL
+        sync: false # Set this in Render dashboard
+      - key: MAX_FILE_SIZE
+        value: 104857600
+      - key: PORT
+        value: 10000
